@@ -16,7 +16,9 @@ class GradeReader
       @students << @student
     end
     @students.each_index do |student|
-      puts "#{@students[student][:name]}'s grades: #{@students[student][:grades].map! { |x| x.to_i }}"
+      @students[student][:grades].map! {|x| x.to_i}
+      student_average = @students[student][:grades].inject{ |sum, x| sum + x}.to_f / @students.size
+      puts "#{@students[student][:name]}'s average grade: #{student_average}"
     end
   end
   def file
@@ -24,4 +26,4 @@ class GradeReader
   end
 end
 
-part1 = GradeReader.new.grade_output
+part2 = GradeReader.new.grade_output
