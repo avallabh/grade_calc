@@ -1,21 +1,18 @@
 require 'csv'
-require 'pry'
+require 'ruby-standard-deviation'
 
-# GradeReader - an object that is responsible for reading in grade data from a CSV
 class GradeReader
-
-  def initialize
-    @file = IO.read('grades.csv')
+  def initialize(filename)
+    @file = IO.read(filename)
     @file = CSV.parse("#{@file}")
-  end
-  # lists students + grades
-  def import
     @students = []
     CSV.foreach('grades.csv') do |row|
       name = row.shift
       @student = { name: name, grades: row }
       @students << @student
     end
+  end
+  def import_student
     @students.each_index do |student|
       puts "#{@students[student][:name]}'s grades: #{@students[student][:grades].map! { |x| x.to_i }}"
     end
@@ -43,7 +40,6 @@ class Student
     end
   end
 end
-
 
 class FinalGrade
   # outputs student name + final letter grade
@@ -96,5 +92,17 @@ class FinalGrade
   end
 end
 
-part4 = FinalGrade.new.grade_output
+# calculates average, min, max, stdev of the class
+class GradeSummary
+  reader = FinalGrade.new.grade_output
+  summary = Hash[*reader.flatten]
+  average = []
 
+  summary.each do |k,v|
+    average << v
+  end
+  puts "Average score: #{average.inject{ |sum, x| sum + x}.to_f / average.length}"
+  puts "Minimum score: #{average.min}"
+  puts "Maximum score: #{average.max}"
+  puts "Standard deviation: #{average.stdev}"
+end
