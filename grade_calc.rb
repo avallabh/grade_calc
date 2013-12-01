@@ -62,21 +62,39 @@ class FinalGrade
       student_average = @students[student][:grades].inject{ |sum, x| sum + x}.to_f / @students.size
       @average_grades << student_average
     end
+
     stu_avg = @student_names.zip(@average_grades)
+    # outputs student name, average, and letter grade to report_card.txt
     stu_avg.each do |name, avg|
       if avg >= 90
-        puts "#{name} got Grade A"
+        puts "#{name}'s final letter grade: A"
+        File.open("report_card.txt", "a") do |f|
+          f.write("#{name}'s average: #{avg} / final grade: A\n")
+        end
       elsif avg >= 80 && avg < 90
-        puts "#{name} Grade B"
+        puts "#{name}'s final letter grade: B"
+        File.open("report_card.txt", "a") do |f|
+          f.write("#{name}'s average: #{avg} / final grade: B\n")
+        end
       elsif avg >= 70 && avg < 80
-        puts "#{name} Grade C"
+        puts "#{name}'s final letter grade: C"
+        File.open("report_card.txt", "a") do |f|
+          f.write("#{name}'s average: #{avg} / final grade: C\n")
+        end
       elsif avg >= 60 && avg < 70
-        puts "#{name} Grade D"
+        puts "#{name}'s final letter grade: D"
+        File.open("report_card.txt", "a") do |f|
+          f.write("#{name}'s average: #{avg} / final grade: D\n")
+        end
       else
-        puts "#{name} Grade F"
+        File.open("report_card.txt", "a") do |f|
+          f.write("#{name}'s average: #{avg} / final grade: F\n")
+        end
+        puts "#{name}'s final letter grade: F"
       end
     end
   end
 end
 
-part3 = FinalGrade.new.grade_output
+part4 = FinalGrade.new.grade_output
+
