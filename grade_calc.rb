@@ -58,9 +58,7 @@ class FinalGrade
       student_average = @students[student][:grades].inject{ |sum, x| sum + x}.to_f / @students.size
       @average_grades << student_average
     end
-
     stu_avg = @student_names.zip(@average_grades)
-    # outputs student name, average, and letter grade to report_card.txt
     stu_avg.each do |name, avg|
       if avg >= 90
         puts "#{name}'s final letter grade: A"
@@ -85,8 +83,8 @@ class FinalGrade
       else
         File.open("report_card.txt", "a") do |f|
           f.write("#{name}'s average: #{avg} / final grade: F\n")
+          puts "#{name}'s final letter grade: F"
         end
-        puts "#{name}'s final letter grade: F"
       end
     end
   end
@@ -98,8 +96,8 @@ class GradeSummary
   summary = Hash[*reader.flatten]
   average = []
 
-  summary.each do |k,v|
-    average << v
+  summary.each do |name, avg|
+    average << avg
   end
   puts "Average score: #{average.inject{ |sum, x| sum + x}.to_f / average.length}"
   puts "Minimum score: #{average.min}"
