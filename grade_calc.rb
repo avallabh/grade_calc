@@ -1,6 +1,5 @@
 require 'csv'
 require 'ruby-standard-deviation'
-require 'pry'
 
 class GradeReader
   def initialize(filename)
